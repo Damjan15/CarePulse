@@ -22,6 +22,8 @@ import DatePicker from "react-datepicker";
 import { Select, SelectTrigger, SelectValue } from "./ui/select";
 import { SelectContent } from "@radix-ui/react-select";
 import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
+import { Label } from "./ui/label";
 
 interface CustomProps {
   control: Control<any>;
@@ -128,9 +130,30 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     case FormFieldType.TEXTAREA:
       return (
         <FormControl>
-          <Textarea placeholder={placeholder} {...field} className="shad-textArea" disabled={props.disabled} />
+          <Textarea
+            placeholder={placeholder}
+            {...field}
+            className="shad-textArea"
+            disabled={props.disabled}
+          />
         </FormControl>
-      )
+      );
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className="flex items-center gap-4">
+            <Checkbox
+              id={props.name}
+              checked={field.value}
+              onChange={field.onChange}
+            />
+
+            <Label htmlFor={props.name} className="checkbox-label">
+              {props.label}
+            </Label>
+          </div>
+        </FormControl>
+      );
     default:
       break;
   }
