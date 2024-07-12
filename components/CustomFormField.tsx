@@ -19,8 +19,7 @@ import PhoneInput from "react-phone-number-input";
 
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import { Select, SelectTrigger, SelectValue } from "./ui/select";
-import { SelectContent } from "@radix-ui/react-select";
+import { Select, SelectTrigger, SelectValue, SelectContent } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
