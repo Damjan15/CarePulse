@@ -13,9 +13,14 @@ import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { FormFieldType } from "./PatientForm";
 
-import { userFormValidation } from "@/lib/validation";
-import { createUser } from "@/lib/actions/patient.actions";
-import { Doctors, GenderOptions, IdentificationTypes } from "@/constants";
+import { PatientFormValidation } from "@/lib/validation";
+import { registerPatient } from "@/lib/actions/patient.actions";
+import {
+  Doctors,
+  GenderOptions,
+  IdentificationTypes,
+  PatientFormDefaultValues,
+} from "@/constants";
 
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
@@ -26,29 +31,69 @@ const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof userFormValidation>>({
-    resolver: zodResolver(userFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: "",
       email: "",
       phone: "",
     },
   });
 
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof userFormValidation>) {
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
 
+    let formData;
+
+    if (
+      values.identificationDocument &&
+      values.identificationDocument.length > 0
+    ) {
+      const blobFile = new Blob([values.identificationDocument[0]], {
+        type: values.identificationDocument[0].type,
+      });
+
+      formData = new FormData();
+      formData.append("blobFile", blobFile);
+      formData.append("fileName", values.identificationDocument[0].name);
+    }
+
     try {
-      const userData = { name, email, phone };
+      const patientData = {
+        userId: user.$id,
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        birthDate: new Date(values.birthDate),
+        gender: values.gender,
+        address: values.address,
+        occupation: values.occupation,
+        emergencyContactName: values.emergencyContactName,
+        emergencyContactNumber: values.emergencyContactNumber,
+        primaryPhysician: values.primaryPhysician,
+        insuranceProvider: values.insuranceProvider,
+        insurancePolicyNumber: values.insurancePolicyNumber,
+        allergies: values.allergies,
+        currentMedication: values.currentMedication,
+        familyMedicalHistory: values.familyMedicalHistory,
+        pastMedicalHistory: values.pastMedicalHistory,
+        identificationType: values.identificationType,
+        identificationNumber: values.identificationNumber,
+        identificationDocument: values.identificationDocument
+          ? formData
+          : undefined,
+        privacyConsent: values.privacyConsent,
+      };
 
-      const user = await createUser(userData);
-      console.log(user);
+      console.log(user.$id);
 
-      if (user) router.push(`/patients/${user.$id}/register`);
+      // @ts-ignore
+      const patient = await registerPatient(patientData);
+
+      if (patient) {
+        router.push(`/patients/${user.$id}/new-appointment`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -202,7 +247,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="insurenceProvider"
+              name="insuranceProvider"
               label="Insurence Provider"
               placeholder="BlueCross BlueShield"
             />
@@ -210,7 +255,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             <CustomFormField
               control={form.control}
               fieldType={FormFieldType.INPUT}
-              name="insurencePolicyNumber"
+              name="insurancePolicyNumber"
               label="Insurence Policy Number"
               placeholder="ABC123456789"
             />
@@ -320,7 +365,6 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="I consent to privacy policy"
         />
 
-        
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
