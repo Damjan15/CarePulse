@@ -5,7 +5,7 @@ import StatCard from "@/components/StatCard";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 
 import { DataTable } from "@/components/table/DataTable";
-import { columns, Payment } from "@/components/table/columns";
+import { columns } from "@/components/table/columns";
 
 
 export default async function Admin() {
