@@ -15,7 +15,7 @@
   <h3 align="center">CarePulse (A HealthCare Management System)</h3>
 
    <div align="center">
-     CarePulse is a healthcare management system that help users schedule hospital appointments. Visit the live site now: <a href="" target="_blank">Link to CarePulse</a>
+     CarePulse is a healthcare management system that help users schedule hospital appointments.
     </div>
 </div>
 
