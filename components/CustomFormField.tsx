@@ -36,8 +36,6 @@ interface CustomProps {
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   const { fieldType, iconSrc, iconAlt, placeholder } = props;
 
-  console.log(fieldType);
-
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
