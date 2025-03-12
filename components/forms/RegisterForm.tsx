@@ -206,6 +206,60 @@ const RegisterForm = ({ user }: { user: User }) => {
           ))}
         </CustomFormField>
 
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="insuranceProvider"
+            label="Insurance Provider"
+            placeholder="BlueCross BlueShield"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="insurancePolicyNumber"
+            label="Insurance Policy Number"
+            placeholder="ABC123456789"
+          />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXT_AREA}
+            name="allergies"
+            label="Allergies (if any)"
+            placeholder="Peanuts, Penicillian, Pollen"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXT_AREA}
+            name="currentMedication"
+            label="Current medication (if any)"
+            placeholder="Ibuprofen 200mg, Paracetamol 500mg"
+          />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXT_AREA}
+            name="familyMedicalHistory"
+            label="Family Medical History"
+            placeholder="Mother had brain, Father had heart disease"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXT_AREA}
+            name="pastMedicalHistory"
+            label="Past Medical History"
+            placeholder="Appendectomy, Tonsillectomy"
+          />
+        </div>
+
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>

@@ -10,8 +10,8 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-
 import { Input } from "./ui/input";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -19,7 +19,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Control } from "react-hook-form";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 interface CustomProps {
   control: Control<any>;
@@ -82,6 +82,18 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             value={field.value}
             onChange={field.onChange}
             className="input-phone"
+          />
+        </FormControl>
+      );
+
+    case FormFieldType.TEXT_AREA:
+      return (
+        <FormControl>
+          <Textarea
+            placeholder={placeholder}
+            {...field}
+            className="shad-textArea"
+            disabled={props.disabled}
           />
         </FormControl>
       );
